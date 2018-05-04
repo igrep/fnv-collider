@@ -28,11 +28,18 @@ fn time(now: Instant) -> f64 {
     t
 }
 
-const CHARS: [u8; 10] = *b"0123456789";
+const CHARS: [u8; 32] = *b" !\"#$%&'()*+,-./0123456789:;<=>?";
 
 const CBITS: usize = 6;
-const P: u64 = 1000003;
-const PINV: u64 = 16109806864799210091;
+const P: u64 = 16777619;  // In Python: 1000003
+/*
+ * PINV is calculated with `Data.Modular.inv` http://hackage.haskell.org/package/modular-arithmetic-1.2.1.3/docs/Data-Modular.html#v:inv
+ * In GHCi:
+ * > :set -XDataKinds
+ * > import Data.Modular
+ * > inv 16777619 :: (Mod Integer 18446744073709551616)
+ */
+const PINV: u64 = 9778875398352553115;  // In Python: 16109806864799210091
 
 /// Return P^exp
 fn pow_p(exp: usize) -> u64 {
